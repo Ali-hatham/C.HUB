@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>College Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap">
+<style>
+/* Layout: a campus notice board. Quiet paper sections, key phrases marked with a highlighter, and one live phone in the hero. */
+:root {
+  --paper: #F4F6FB;
+  --surface: #FFFFFF;
+  --ink: #131A31;
+  --muted: #59627E;
+  --line: #DCE1EC;
+  --brand: #2D48D2;
+  --brand-ink: #FFFFFF;
+  --mark: #FFD43B;
+  --mark-soft: rgba(255, 212, 59, .55);
+  --on-mark: #131A31;
+  --t-decision: #C3332F; --t-decision-bg: #FCE9E8;
+  --t-exam: #2D48D2;     --t-exam-bg: #E6EAFC;
+  --t-news: #0B7C6B;     --t-news-bg: #E1F4F0;
+  --t-event: #9A5B00;    --t-event-bg: #FBF0DC;
+  --ok: #0B7C6B;
+  --phone-frame: #131A31;
+  --shadow: 0 30px 60px -30px rgba(19, 26, 49, .35);
+
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  --f-arabic: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+
+  --s-1: .8125rem; --s0: 1rem; --s1: 1.1875rem; --s2: 1.5rem; --s3: 2.125rem; --s4: clamp(2.4rem, 5.4vw, 4rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0C1121; --surface: #141B30; --ink: #E7EBF5; --muted: #9CA5C2; --line: #263049;
+    --brand: #8FA2FF; --brand-ink: #0C1121; --mark-soft: rgba(255, 212, 59, .32);
+    --t-decision: #FF8A84; --t-decision-bg: #3A1D22;
+    --t-exam: #A7B5FF;     --t-exam-bg: #1E2752;
+    --t-news: #5FD6C1;     --t-news-bg: #12322F;
+    --t-event: #F2BC5E;    --t-event-bg: #3A2C12;
+    --ok: #5FD6C1; --phone-frame: #000000; --shadow: 0 30px 60px -30px rgba(0, 0, 0, .8);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0C1121; --surface: #141B30; --ink: #E7EBF5; --muted: #9CA5C2; --line: #263049;
+  --brand: #8FA2FF; --brand-ink: #0C1121; --mark-soft: rgba(255, 212, 59, .32);
+  --t-decision: #FF8A84; --t-decision-bg: #3A1D22;
+  --t-exam: #A7B5FF;     --t-exam-bg: #1E2752;
+  --t-news: #5FD6C1;     --t-news-bg: #12322F;
+  --t-event: #F2BC5E;    --t-event-bg: #3A2C12;
+  --ok: #5FD6C1; --phone-frame: #000000; --shadow: 0 30px 60px -30px rgba(0, 0, 0, .8);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: var(--s0); line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+a { color: var(--brand); }
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--f-display); line-height: 1.1; text-wrap: balance; margin: 0; letter-spacing: -.01em; }
+h2 { font-size: var(--s3); font-weight: 800; }
+h3 { font-size: var(--s1); font-weight: 600; }
+p { margin: 0; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.hl { background: linear-gradient(transparent 58%, var(--mark-soft) 58%, var(--mark-soft) 92%, transparent 92%); padding: 0 .08em; }
+.eyebrow { font-family: var(--f-mono); font-size: var(--s-1); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.mono { font-family: var(--f-mono); font-size: .9em; }
+.lede { color: var(--muted); font-size: var(--s1); max-width: 60ch; }
+
+/* header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; gap: 24px; padding-block: 12px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-weight: 800; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+.logo-mark { width: 30px; height: 30px; border-radius: 8px; background: var(--mark); color: var(--on-mark); display: grid; place-items: center; font-size: .9rem; }
+.top nav { display: flex; gap: 20px; margin-left: auto; flex-wrap: wrap; }
+.top nav a { color: var(--muted); text-decoration: none; font-size: var(--s-1); font-weight: 700; }
+.top nav a:hover { color: var(--ink); }
+@media (max-width: 760px) { .top nav a:not(.gh) { display: none; } }
+
+/* sections */
+section { padding-block: clamp(56px, 8vw, 96px); }
+section + section { border-top: 1px solid var(--line); }
+.sec-head { display: grid; gap: 12px; margin-bottom: 40px; max-width: 760px; }
+
+/* hero */
+.hero { padding-block: clamp(40px, 6vw, 72px) clamp(56px, 8vw, 88px); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 48px; align-items: center; }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
+.hero-copy { display: grid; gap: 24px; min-width: 0; }
+.hero h1 { font-size: var(--s4); font-weight: 800; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 18px; border-radius: 10px; font-weight: 700; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); font: inherit; font-weight: 700; cursor: pointer; }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: var(--brand-ink); }
+.btn:hover { filter: brightness(1.05); }
+.goals-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; border-top: 1px solid var(--line); padding-top: 20px; }
+.goals-strip div { display: grid; gap: 2px; min-width: 0; }
+.goals-strip b { font-family: var(--f-display); font-size: var(--s2); font-weight: 800; font-variant-numeric: tabular-nums; }
+.goals-strip span { color: var(--muted); font-size: var(--s-1); }
+@media (max-width: 520px) { .goals-strip { grid-template-columns: minmax(0, 1fr); } }
+
+/* phone */
+.phone-col { display: grid; justify-items: center; gap: 14px; min-width: 0; }
+.phone { width: min(330px, 100%); height: 640px; border-radius: 42px; background: var(--phone-frame); padding: 12px; box-shadow: var(--shadow); }
+.ph-inner { height: 100%; border-radius: 32px; background: var(--paper); overflow: hidden; display: flex; flex-direction: column; position: relative; }
+.phone[lang="ar"] .ph-inner { font-family: var(--f-arabic); }
+.ph-status { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px 4px; font-size: .75rem; font-weight: 700; font-family: var(--f-mono); }
+.lang-btn { font: inherit; font-family: var(--f-arabic); font-size: .75rem; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 2px 10px; cursor: pointer; }
+.phone[lang="ar"] .lang-btn { font-family: var(--f-body); }
+.ph-screen { flex: 1; overflow-y: auto; padding: 8px 16px 16px; display: grid; align-content: start; gap: 14px; font-size: .875rem; line-height: 1.45; }
+.ph-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ph-head b { font-family: var(--f-display); font-size: 1.25rem; font-weight: 800; }
+.phone[lang="ar"] .ph-head b { font-family: var(--f-arabic); font-weight: 600; }
+.ph-sub { color: var(--muted); font-size: .75rem; }
+.ph-h { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 0; }
+.phone[lang="ar"] .ph-h { text-transform: none; letter-spacing: 0; }
+.ph-nav { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); background: var(--surface); padding: 6px 4px 10px; }
+.ph-nav button { font: inherit; font-size: .6875rem; background: none; border: 0; color: var(--muted); display: grid; justify-items: center; gap: 2px; padding: 6px 2px; cursor: pointer; border-radius: 10px; }
+.ph-nav button[aria-pressed="true"] { color: var(--brand); font-weight: 700; }
+.ph-nav svg { width: 22px; height: 22px; }
+.phone-cap { color: var(--muted); font-size: var(--s-1); text-align: center; max-width: 34ch; }
+
+.banner { position: relative; height: 128px; border-radius: 16px; background: var(--ink); color: var(--paper); overflow: hidden; }
+.slide { position: absolute; inset: 0; padding: 14px 16px; display: grid; align-content: space-between; opacity: 0; transition: opacity .5s ease; }
+.slide.on { opacity: 1; }
+.slide-top { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.pin { font-size: .6875rem; opacity: .75; }
+.slide h5 { margin: 0; font-size: 1rem; line-height: 1.3; font-family: var(--f-display); font-weight: 600; }
+.phone[lang="ar"] .slide h5 { font-family: var(--f-arabic); }
+.slide small { opacity: .75; font-size: .6875rem; }
+.dots { position: absolute; bottom: 10px; inset-inline-end: 14px; display: flex; gap: 4px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--paper); opacity: .35; }
+.dots i.on { opacity: 1; background: var(--mark); }
+.urgent { background: var(--mark); color: var(--on-mark); font-size: .625rem; font-weight: 700; border-radius: 4px; padding: 1px 6px; }
+
+.tag { display: inline-block; font-size: .625rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 2px 7px; border-radius: 999px; }
+.phone[lang="ar"] .tag { text-transform: none; letter-spacing: 0; font-size: .6875rem; }
+.tag.decision { color: var(--t-decision); background: var(--t-decision-bg); }
+.tag.exam { color: var(--t-exam); background: var(--t-exam-bg); }
+.tag.news { color: var(--t-news); background: var(--t-news-bg); }
+.tag.event { color: var(--t-event); background: var(--t-event-bg); }
+.banner .tag { background: var(--surface); }
+
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; gap: 4px; }
+.item-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.item-meta { color: var(--muted); font-size: .75rem; }
+.item b { font-weight: 700; }
+
+.search { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; color: var(--muted); }
+.search svg { width: 16px; height: 16px; flex: none; }
+.crumbs { font-size: .75rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 4px; }
+.crumbs span:last-child { color: var(--ink); font-weight: 700; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { font-size: .75rem; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; background: var(--surface); }
+.chip.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.ftype { font-family: var(--f-mono); font-size: .625rem; padding: 2px 6px; border-radius: 4px; background: var(--t-exam-bg); color: var(--t-exam); flex: none; }
+.ftype.docx { background: var(--t-news-bg); color: var(--t-news); }
+.pending { font-size: .6875rem; font-weight: 700; color: var(--t-event); background: var(--t-event-bg); border-radius: 4px; padding: 1px 6px; }
+.fab { position: absolute; bottom: 76px; inset-inline-end: 16px; background: var(--brand); color: var(--brand-ink); border-radius: 999px; padding: 10px 16px; font-weight: 700; font-size: .8125rem; box-shadow: var(--shadow); }
+
+.prof { display: flex; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--mark); color: var(--on-mark); display: grid; place-items: center; font-weight: 700; flex: none; }
+.verified { color: var(--ok); font-size: .75rem; font-weight: 700; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.stats div { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px; text-align: center; }
+.stats b { display: block; font-family: var(--f-display); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.stats span { font-size: .6875rem; color: var(--muted); }
+.toggle { width: 36px; height: 20px; border-radius: 999px; background: var(--line); position: relative; border: 0; cursor: pointer; flex: none; padding: 0; }
+.toggle::after { content: ""; position: absolute; top: 3px; inset-inline-start: 3px; width: 14px; height: 14px; border-radius: 50%; background: var(--surface); transition: inset-inline-start .2s; }
+.toggle[aria-checked="true"] { background: var(--brand); }
+.toggle[aria-checked="true"]::after { inset-inline-start: 19px; }
+.chev { color: var(--muted); }
+.phone[dir="rtl"] .chev { transform: scaleX(-1); display: inline-block; }
+
+/* problem */
+.then-now { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 820px) { .then-now { grid-template-columns: minmax(0, 1fr); } }
+.scrap { border: 1px dashed var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.scrap .eyebrow { color: var(--t-decision); }
+.scrap p { color: var(--muted); }
+.replace { margin-top: 24px; background: var(--ink); color: var(--paper); border-radius: 16px; padding: 22px 24px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; font-family: var(--f-display); font-size: var(--s2); font-weight: 600; line-height: 1.25; }
+.replace .logo-mark { width: 40px; height: 40px; font-size: 1.1rem; }
+
+/* goals */
+.two { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; }
+@media (max-width: 820px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.goal-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; counter-reset: g; }
+.goal-list li { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 12px; padding-block: 16px; border-bottom: 1px solid var(--line); counter-increment: g; font-size: var(--s1); }
+.goal-list li::before { content: counter(g); font-family: var(--f-mono); color: var(--muted); font-size: var(--s0); padding-top: 3px; }
+.nongoals { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: grid; gap: 12px; align-content: start; }
+.nongoals ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.nongoals li { display: flex; gap: 10px; color: var(--muted); }
+.nongoals li::before { content: "×"; color: var(--t-decision); font-weight: 700; }
+
+/* features */
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .features { grid-template-columns: minmax(0, 1fr); } }
+.feat { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.feat-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.feat-head span { display: flex; align-items: center; gap: 10px; }
+.feat-head svg { width: 22px; height: 22px; color: var(--brand); }
+.feat ul { margin: 0; padding-inline-start: 18px; display: grid; gap: 6px; color: var(--muted); }
+.peek { font: inherit; font-size: var(--s-1); font-weight: 700; color: var(--brand); background: none; border: 0; cursor: pointer; padding: 4px 0; white-space: nowrap; }
+.tree { font-family: var(--f-mono); font-size: var(--s-1); background: var(--paper); border-radius: 10px; padding: 10px 12px; overflow-x: auto; white-space: nowrap; }
+
+/* upload flow */
+.flow { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .flow { grid-template-columns: minmax(0, 1fr); } }
+.flow li { border-top: 3px solid var(--ink); padding-top: 14px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.flow li:last-child { border-top-color: var(--ok); }
+.flow .eyebrow { color: var(--ink); }
+.flow p { color: var(--muted); font-size: var(--s-1); }
+
+/* roles */
+.scroll-x { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: var(--s-1); }
+th, td { text-align: start; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+thead th { font-family: var(--f-mono); font-weight: 500; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-size: .75rem; white-space: nowrap; }
+.matrix td:not(:first-child), .matrix th:not(:first-child) { text-align: center; width: 120px; }
+.yes { color: var(--ok); font-weight: 700; }
+.no { color: var(--line); }
+.role-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
+@media (max-width: 820px) { .role-cards { grid-template-columns: minmax(0, 1fr); } }
+.role { display: grid; gap: 6px; min-width: 0; }
+.role p { color: var(--muted); font-size: var(--s-1); }
+.note { color: var(--muted); font-size: var(--s-1); margin-top: 12px; }
+
+/* requirements */
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.filters button { font: inherit; font-size: var(--s-1); font-weight: 700; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.prio { font-family: var(--f-mono); font-size: .75rem; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+.prio.p0 { background: var(--mark); color: var(--on-mark); }
+.prio.p1 { background: var(--t-exam-bg); color: var(--t-exam); }
+.prio.p2 { background: var(--paper); color: var(--muted); border: 1px solid var(--line); }
+.req td:first-child { font-family: var(--f-mono); white-space: nowrap; }
+.req td:nth-child(2) { color: var(--muted); white-space: nowrap; }
+
+/* roadmap */
+.phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 860px) { .phases { grid-template-columns: minmax(0, 1fr); } }
+.phase { border-radius: 16px; padding: 24px; display: grid; gap: 14px; align-content: start; background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.phase.now { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.phase.now .eyebrow, .phase.now .gate { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+.phase ul { margin: 0; padding-inline-start: 18px; display: grid; gap: 6px; }
+.gate { border-top: 1px solid color-mix(in srgb, currentColor 25%, transparent); padding-top: 12px; font-size: var(--s-1); color: var(--muted); }
+.gate b { color: inherit; }
+
+/* nfr + metrics */
+.kv { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+@media (max-width: 700px) { .kv { grid-template-columns: minmax(0, 1fr); } }
+.kv div { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 12px; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.kv dt { font-family: var(--f-mono); font-size: var(--s-1); color: var(--muted); padding-top: 2px; }
+.kv dd { margin: 0; }
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.metric { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.metric b { font-family: var(--f-display); font-size: var(--s3); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.metric span { color: var(--muted); font-size: var(--s-1); }
+.meter { height: 8px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--brand); }
+
+/* risks */
+.risks { display: grid; gap: 0; }
+.risk { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 24px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+@media (max-width: 700px) { .risk { grid-template-columns: minmax(0, 1fr); gap: 6px; } }
+.risk p:last-child { color: var(--muted); }
+.decisions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+.decisions span { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 14px; font-size: var(--s-1); }
+.decisions b { margin-inline-end: 6px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px; color: var(--muted); font-size: var(--s-1); }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top"><span class="logo-mark">CH</span>College Hub</a>
+    <nav aria-label="Sections">
+      <a href="#features">Features</a>
+      <a href="#roles">Roles</a>
+      <a href="#requirements">Requirements</a>
+      <a href="#roadmap">Roadmap</a>
+      <a class="gh" href="https://github.com/Ali-hatham/C.HUB/blob/main/College_Hub_PRD.md">Read the PRD</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Student-run · One college · Arabic &amp; English</p>
+        <h1>Study files, college facts and official decisions, all in <span class="hl">one app</span>.</h1>
+        <p class="lede">College Hub replaces buried WhatsApp files and paper notice boards with one searchable place. Students share course materials, and student admins repost every college decision with the original document attached.</p>
+        <div class="cta">
+          <a class="btn primary" href="#features">See what it does</a>
+          <a class="btn" href="https://github.com/Ali-hatham/C.HUB/blob/main/College_Hub_PRD.md">Read the full PRD</a>
+        </div>
+        <div class="goals-strip">
+          <div><b>&lt; 30 s</b><span>to find a study file for your course</span></div>
+          <div><b>Same day</b><span>for every decision to reach active users</span></div>
+          <div><b>2,000</b><span>approved files targeted at 6 months</span></div>
+        </div>
+      </div>
+      <div class="phone-col">
+        <div class="phone" id="phone" lang="en" dir="ltr">
+          <div class="ph-inner">
+            <div class="ph-status"><span>9:41</span><button class="lang-btn" id="langBtn" type="button">عربي</button></div>
+            <div class="ph-screen" id="phScreen" aria-live="polite"></div>
+            <nav class="ph-nav" id="phNav" aria-label="App tabs"></nav>
+          </div>
+        </div>
+        <p class="phone-cap">Interactive preview with sample content. Tap the tabs, or switch to Arabic to see the right-to-left layout.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="problem">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">The problem</p>
+        <h2>Study material and college news are scattered, so students miss what matters.</h2>
+      </div>
+      <div class="then-now">
+        <div class="scrap"><p class="eyebrow">WhatsApp &amp; Telegram groups</p><h3>Files get buried</h3><p>Lecture notes, past exams and summaries scroll away under chat messages and are hard to search.</p></div>
+        <div class="scrap"><p class="eyebrow">Asking around</p><h3>New students get lost</h3><p>Departments, schedules, contacts, locations and procedures have no single, current guide.</p></div>
+        <div class="scrap"><p class="eyebrow">Paper boards &amp; social pages</p><h3>Decisions arrive late</h3><p>Exam dates, holidays and rule changes reach many students late, or not at all.</p></div>
+      </div>
+      <div class="replace"><span class="logo-mark">CH</span>College Hub replaces all three with one trusted, searchable source.</div>
+    </div>
+  </section>
+
+  <section id="goals">
+    <div class="wrap two">
+      <div>
+        <div class="sec-head"><p class="eyebrow">Goals</p><h2>What the first release has to achieve</h2></div>
+        <ol class="goal-list">
+          <li>Let students find a study file for their course in under 30 seconds.</li>
+          <li>Make college decisions reach every active user on the day they are published.</li>
+          <li>Give new students a complete, up-to-date guide to the college.</li>
+          <li>Build a shared library of study files that grows through student uploads.</li>
+        </ol>
+      </div>
+      <aside class="nongoals">
+        <p class="eyebrow">Not in the first release</p>
+        <ul>
+          <li>Grades, attendance or registration. These stay in the college's student information system.</li>
+          <li>Live classes, video lectures or a full learning management system.</li>
+          <li>Chat or social feeds between students.</li>
+          <li>Paid ads, paid content or a marketplace for selling notes.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Core features</p>
+        <h2>Four areas, one tap apart on the bottom bar</h2>
+        <p class="lede">Each area maps to a tab in the app. Use "Show in app" to open it in the preview above.</p>
+      </div>
+      <div class="features">
+        <article class="feat">
+          <div class="feat-head"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><h3>News and decisions board</h3></span><button class="peek" data-go="home" type="button">Show in app</button></div>
+          <ul>
+            <li>A banner at the top of Home rotates through pinned announcements. It carries no paid ads.</li>
+            <li>Below it, a newest-first feed tagged <span class="tag decision">Decision</span> <span class="tag news">News</span> <span class="tag event">Event</span> <span class="tag exam">Exam</span></li>
+            <li>Each post shows a title, body, optional image or PDF, publish date and the issuing office.</li>
+            <li>Urgent decisions send a push notification.</li>
+          </ul>
+        </article>
+        <article class="feat">
+          <div class="feat-head"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><h3>Study files</h3></span><button class="peek" data-go="files" type="button">Show in app</button></div>
+          <div class="tree">Department › Stage › Course › Type</div>
+          <ul>
+            <li>Types: lecture, summary, past exam and assignment.</li>
+            <li>Keyword search with filters for department, stage, course, file type and semester.</li>
+            <li>Upload PDF, Word, PowerPoint or images. New uploads wait for moderator approval.</li>
+            <li>Download, save to favorites, rate and report files.</li>
+          </ul>
+        </article>
+        <article class="feat">
+          <div class="feat-head"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6M9 11h.01M15 11h.01"/></svg><h3>College information</h3></span><button class="peek" data-go="college" type="button">Show in app</button></div>
+          <ul>
+            <li>About the college, departments and their heads, and staff contact details.</li>
+            <li>Academic calendar and exam schedules.</li>
+            <li>Campus map and building locations.</li>
+            <li>Common procedures and FAQs: registration, transfers and document requests.</li>
+          </ul>
+        </article>
+        <article class="feat">
+          <div class="feat-head"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><h3>Profile</h3></span><button class="peek" data-go="profile" type="button">Show in app</button></div>
+          <ul>
+            <li>Sign up with your college email, confirmed with a one-time code.</li>
+            <li>Department and stage personalize the files and news you see.</li>
+            <li>My uploads, favorites, downloads and notification settings.</li>
+          </ul>
+        </article>
+      </div>
+
+      <ol class="flow" aria-label="How an upload reaches the library">
+        <li><p class="eyebrow">Step 1</p><h3>Pick course and type</h3><p>The student fills in the course and file type while uploading.</p></li>
+        <li><p class="eyebrow">Step 2</p><h3>Upload up to 25 MB</h3><p>PDF, DOCX, PPTX, JPG or PNG. Only verified students can upload.</p></li>
+        <li><p class="eyebrow">Step 3</p><h3>Scan and dedupe</h3><p>Every file is virus-scanned, and duplicates are detected.</p></li>
+        <li><p class="eyebrow">Step 4</p><h3>Moderator review</h3><p>Approve or reject from the queue, targeted at under 48 hours.</p></li>
+        <li><p class="eyebrow">Step 5</p><h3>Live in the library</h3><p>The file becomes searchable and the uploader is notified.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="roles">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Who uses it</p>
+        <h2>Three roles, each with its own permissions</h2>
+      </div>
+      <div class="role-cards">
+        <div class="role"><h3>Student</h3><p>Undergraduates in every year who want study files, news and a guide to the college.</p></div>
+        <div class="role"><h3>Moderator</h3><p>A team of 5 trusted students, covering all departments, who keep the file library clean.</p></div>
+        <div class="role"><h3>College admin</h3><p>The student team that reposts official news and decisions so they reach every student.</p></div>
+      </div>
+      <div class="scroll-x">
+        <table class="matrix">
+          <thead><tr><th scope="col">Permission</th><th scope="col">Student</th><th scope="col">Moderator</th><th scope="col">Admin</th></tr></thead>
+          <tbody>
+            <tr><td>Search and download files</td><td class="yes" aria-label="Yes">✓</td><td class="no" aria-label="No">–</td><td class="no" aria-label="No">–</td></tr>
+            <tr><td>Upload files</td><td class="yes" aria-label="Yes">✓</td><td class="no" aria-label="No">–</td><td class="no" aria-label="No">–</td></tr>
+            <tr><td>Save favorites, rate and report files</td><td class="yes" aria-label="Yes">✓</td><td class="no" aria-label="No">–</td><td class="no" aria-label="No">–</td></tr>
+            <tr><td>Approve or reject uploads</td><td class="no" aria-label="No">–</td><td class="yes" aria-label="Yes">✓</td><td class="no" aria-label="No">–</td></tr>
+            <tr><td>Remove reported files</td><td class="no" aria-label="No">–</td><td class="yes" aria-label="Yes">✓</td><td class="no" aria-label="No">–</td></tr>
+            <tr><td>Publish news and decisions</td><td class="no" aria-label="No">–</td><td class="no" aria-label="No">–</td><td class="yes" aria-label="Yes">✓</td></tr>
+            <tr><td>Pin announcements to the banner</td><td class="no" aria-label="No">–</td><td class="no" aria-label="No">–</td><td class="yes" aria-label="Yes">✓</td></tr>
+            <tr><td>Edit college information</td><td class="no" aria-label="No">–</td><td class="no" aria-label="No">–</td><td class="yes" aria-label="Yes">✓</td></tr>
+            <tr><td>Manage users</td><td class="no" aria-label="No">–</td><td class="no" aria-label="No">–</td><td class="yes" aria-label="Yes">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">The table follows the PRD's role definitions. In Phase 1, admins approve uploads until the moderator tools arrive in Phase 2.</p>
+    </div>
+  </section>
+
+  <section id="requirements">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Functional requirements</p>
+        <h2>14 requirements, ranked by priority</h2>
+        <p class="lede">P0 items make up the MVP. P1 and P2 follow in later phases.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter by priority">
+        <button type="button" data-p="all" aria-pressed="true">All</button>
+        <button type="button" data-p="p0" aria-pressed="false">P0 Must</button>
+        <button type="button" data-p="p1" aria-pressed="false">P1 Should</button>
+        <button type="button" data-p="p2" aria-pressed="false">P2 Could</button>
+      </div>
+      <div class="scroll-x">
+        <table class="req">
+          <thead><tr><th scope="col">ID</th><th scope="col">Area</th><th scope="col">Requirement</th><th scope="col">Priority</th></tr></thead>
+          <tbody id="reqBody">
+            <tr data-p="p0"><td>FR-1</td><td>Accounts</td><td>Sign up and log in with a verified college email; role set to Student, Moderator or Admin</td><td><span class="prio p0">P0 Must</span></td></tr>
+            <tr data-p="p0"><td>FR-2</td><td>News</td><td>Admins create, edit, pin and delete posts with type tag and attachment</td><td><span class="prio p0">P0 Must</span></td></tr>
+            <tr data-p="p0"><td>FR-3</td><td>News</td><td>Home shows a rotating banner of pinned posts above a newest-first feed</td><td><span class="prio p0">P0 Must</span></td></tr>
+            <tr data-p="p0"><td>FR-4</td><td>News</td><td>Push notification for posts marked urgent</td><td><span class="prio p0">P0 Must</span></td></tr>
+            <tr data-p="p0"><td>FR-5</td><td>Files</td><td>Browse files by department, stage, course and type</td><td><span class="prio p0">P0 Must</span></td></tr>
+            <tr data-p="p0"><td>FR-6</td><td>Files</td><td>Keyword search with filters; results in under 2 seconds</td><td><span class="prio p0">P0 Must</span></td></tr>
+            <tr data-p="p0"><td>FR-7</td><td>Files</td><td>Upload files up to 25 MB (PDF, DOCX, PPTX, JPG, PNG) into a moderation queue</td><td><span class="prio p0">P0 Must</span></td></tr>
+            <tr data-p="p1"><td>FR-8</td><td>Files</td><td>Moderators approve, reject or remove files; uploader is notified</td><td><span class="prio p1">P1 Should</span></td></tr>
+            <tr data-p="p1"><td>FR-9</td><td>College info</td><td>Admin-editable pages for departments, staff, calendar, map and FAQs</td><td><span class="prio p1">P1 Should</span></td></tr>
+            <tr data-p="p1"><td>FR-10</td><td>Files</td><td>Favorites, ratings and reporting</td><td><span class="prio p1">P1 Should</span></td></tr>
+            <tr data-p="p1"><td>FR-11</td><td>Personalization</td><td>Feed and file suggestions filtered by the student's department and stage</td><td><span class="prio p1">P1 Should</span></td></tr>
+            <tr data-p="p2"><td>FR-12</td><td>Files</td><td>Offline access to saved files</td><td><span class="prio p2">P2 Could</span></td></tr>
+            <tr data-p="p2"><td>FR-13</td><td>News</td><td>Comments or reactions on news posts</td><td><span class="prio p2">P2 Could</span></td></tr>
+            <tr data-p="p2"><td>FR-14</td><td>Platform</td><td>Support for multiple colleges in one app</td><td><span class="prio p2">P2 Could</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Release plan</p>
+        <h2>Three phases, each unlocked by a clear gate</h2>
+        <p class="lede">Phase 1 alone is enough to launch, since it covers both the news board and the file library. Every phase runs on free tools and hosting tiers.</p>
+      </div>
+      <div class="phases">
+        <article class="phase now">
+          <p class="eyebrow">Phase 1 · MVP · FR-1 to FR-7</p>
+          <h3>Launch the core</h3>
+          <ul><li>Sign-up and roles</li><li>News board, banner and urgent alerts</li><li>Browse, search and upload files</li><li>Uploads approved by admins</li></ul>
+          <p class="gate"><b>Gate:</b> pilot with 1 department</p>
+        </article>
+        <article class="phase">
+          <p class="eyebrow">Phase 2 · Growth · FR-8 to FR-11</p>
+          <h3>Open to every department</h3>
+          <ul><li>Moderator role and tools</li><li>College information pages</li><li>Favorites, ratings and reports</li><li>Personalized feed and files</li></ul>
+          <p class="gate"><b>Gate:</b> all departments live</p>
+        </article>
+        <article class="phase">
+          <p class="eyebrow">Phase 3 · Expansion · FR-12 to FR-14</p>
+          <h3>Grow beyond one college</h3>
+          <ul><li>Offline saved files</li><li>Comments and reactions</li><li>Multiple colleges</li></ul>
+          <p class="gate"><b>Gate:</b> ongoing, driven by feedback</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="quality">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Non-functional requirements</p><h2>How it has to perform</h2></div>
+      <dl class="kv">
+        <div><dt>Platforms</dt><dd>Android and iOS from one codebase, such as Flutter or React Native, plus a web admin panel</dd></div>
+        <div><dt>Language</dt><dd>Arabic and English, with a full right-to-left layout for Arabic</dd></div>
+        <div><dt>Performance</dt><dd>Opens in under 3 seconds; search returns in under 2 seconds on 4G</dd></div>
+        <div><dt>Scale</dt><dd>10,000 registered students and 1,000 people online at once</dd></div>
+        <div><dt>Security</dt><dd>HTTPS everywhere, role-based permissions, and uploads from verified students only</dd></div>
+        <div><dt>Storage</dt><dd>Files virus-scanned on upload, with duplicates detected</dd></div>
+        <div><dt>Accessibility</dt><dd>Readable font sizes, screen reader labels and enough color contrast</dd></div>
+        <div><dt>Availability</dt><dd>99.5% uptime, with extra capacity during exam periods</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="metrics">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Success metrics</p>
+        <h2>Targets 6 months after launch</h2>
+        <p class="lede">These are starting proposals, to adjust with the college. Bars show each percentage target out of 100%.</p>
+      </div>
+      <div class="metrics">
+        <div class="metric"><b>50%</b><span>of enrolled students registered</span><div class="meter"><i style="width:50%"></i></div></div>
+        <div class="metric"><b>40%</b><span>of registered students active each week</span><div class="meter"><i style="width:40%"></i></div></div>
+        <div class="metric"><b>60%</b><span>of searches end in a download</span><div class="meter"><i style="width:60%"></i></div></div>
+        <div class="metric"><b>70%</b><span>of students open an urgent decision within 24 hours</span><div class="meter"><i style="width:70%"></i></div></div>
+        <div class="metric"><b>2,000</b><span>approved study files in the library</span></div>
+        <div class="metric"><b>&lt; 48 h</b><span>upload approval time</span></div>
+        <div class="metric"><b>4.3+</b><span>app store rating</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="risks">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Risks and decisions</p><h2>What could go wrong, and the plan for it</h2></div>
+      <div class="risks">
+        <div class="risk"><p><b>Copyrighted textbooks get uploaded</b></p><p>Moderation queue, a report button, clear upload rules and fast takedown.</p></div>
+        <div class="risk"><p><b>Too few files at launch, so students don't return</b></p><p>Moderators and class representatives seed the library before launch.</p></div>
+        <div class="risk"><p><b>Official news is missed because the college is not a partner</b></p><p>Student admins repost each decision with the original document attached. Posting takes under 2 minutes.</p></div>
+        <div class="risk"><p><b>Fake or unofficial "decisions" spread</b></p><p>Only verified admin accounts can post, and every post shows the issuing office.</p></div>
+        <div class="risk"><p><b>Storage costs grow with uploads</b></p><p>Free hosting tiers, a 25 MB file limit, duplicate detection and compression.</p></div>
+      </div>
+      <div class="decisions" aria-label="Decisions">
+        <span><b>Sponsorship</b>Student-run, not an official college project</span>
+        <span><b>Verification</b>College email and a one-time code</span>
+        <span><b>Banner</b>College announcements only, no paid ads</span>
+        <span><b>Moderators</b>5 students across all departments</span>
+        <span><b>Budget</b>None; free tools and hosting tiers</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>College Hub · a student-run practice project · PRD by Ali, October 2026</span>
+    <a href="https://github.com/Ali-hatham/C.HUB">github.com/Ali-hatham/C.HUB</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var ICONS = {
+    home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+    files: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+    college: '<path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-6h6v6"/>',
+    profile: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'
+  };
+  function icon(name) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[name] + '</svg>'; }
+
+  var T = {
+    en: {
+      switchTo: 'عربي', tabs: { home: 'Home', files: 'Files', college: 'College', profile: 'Profile' },
+      hello: 'Computer Science · Stage 2', pinned: 'Pinned', urgent: 'Urgent · push sent', latest: 'Latest news & decisions',
+      tags: { decision: 'Decision', exam: 'Exam', news: 'News', event: 'Event' },
+      slides: [
+        { tag: 'decision', urgent: true, title: 'Final exams start on 4 January', office: "Dean's Office" },
+        { tag: 'exam', title: 'Second-semester exam schedule published', office: 'Exams Committee' },
+        { tag: 'news', title: 'Library stays open until 9 pm during exams', office: 'Library' }
+      ],
+      feed: [
+        { tag: 'decision', title: 'Classes suspended on Thursday for the public holiday', office: 'Registrar', when: '2h ago', pdf: true },
+        { tag: 'event', title: 'Engineering career fair in Hall B', office: 'Student Affairs', when: '1 day ago' },
+        { tag: 'news', title: 'New lab opens in the Computer Science building', office: 'College Office', when: '3 days ago' }
+      ],
+      pdf: 'PDF attached',
+      filesTitle: 'Study files', search: 'data structures past exam',
+      crumbs: ['Computer Science', 'Stage 2', 'Data Structures', 'Past exams'],
+      chips: ['Semester 1', 'PDF', 'Past exam'],
+      fileList: [
+        { type: 'PDF', name: 'Final exam 2025 with answers', meta: '2.1 MB · ★ 4.8 · 312 downloads' },
+        { type: 'PDF', name: 'Midterm exam 2025', meta: '1.4 MB · ★ 4.5 · 198 downloads' },
+        { type: 'DOCX', name: 'Trees and graphs summary', meta: '860 KB · ★ 4.6 · 141 downloads' },
+        { type: 'PDF', name: 'Lecture 7 notes (your upload)', meta: '3.2 MB', pending: true }
+      ],
+      pending: 'Pending review', upload: '+ Upload',
+      collegeTitle: 'Your college',
+      collegeList: [
+        ['Departments', '6 departments and their heads'],
+        ['Academic calendar', 'Semester 1 · week 9'],
+        ['Exam schedules', 'Updated 2 days ago'],
+        ['Campus map', 'Buildings A to F'],
+        ['Procedures & FAQs', 'Registration, transfers, documents'],
+        ['Staff contacts', 'Offices and phone numbers']
+      ],
+      profTitle: 'Profile', you: 'Sample student', email: 'you@college.edu', verified: '✓ College email verified',
+      dept: 'Computer Science · Stage 2',
+      stats: [['3', 'My uploads'], ['12', 'Favorites'], ['40', 'Downloads']],
+      notif: 'Notifications', notifs: [['Urgent decisions', true], ['Exam news', true], ['Events', false]]
+    },
+    ar: {
+      switchTo: 'English', tabs: { home: 'الرئيسية', files: 'الملفات', college: 'الكلية', profile: 'حسابي' },
+      hello: 'علوم الحاسوب · المرحلة الثانية', pinned: 'مثبّت', urgent: 'عاجل · أُرسل إشعار', latest: 'آخر الأخبار والقرارات',
+      tags: { decision: 'قرار', exam: 'امتحان', news: 'خبر', event: 'فعالية' },
+      slides: [
+        { tag: 'decision', urgent: true, title: 'الامتحانات النهائية تبدأ في 4 كانون الثاني', office: 'مكتب العميد' },
+        { tag: 'exam', title: 'نشر جدول امتحانات الفصل الثاني', office: 'لجنة الامتحانات' },
+        { tag: 'news', title: 'المكتبة مفتوحة حتى التاسعة مساءً أيام الامتحانات', office: 'المكتبة' }
+      ],
+      feed: [
+        { tag: 'decision', title: 'تعطيل الدوام يوم الخميس بمناسبة العطلة الرسمية', office: 'شعبة التسجيل', when: 'قبل ساعتين', pdf: true },
+        { tag: 'event', title: 'معرض التوظيف الهندسي في القاعة B', office: 'شؤون الطلبة', when: 'قبل يوم' },
+        { tag: 'news', title: 'افتتاح مختبر جديد في مبنى علوم الحاسوب', office: 'إدارة الكلية', when: 'قبل 3 أيام' }
+      ],
+      pdf: 'مرفق PDF',
+      filesTitle: 'الملفات الدراسية', search: 'هياكل البيانات امتحان سابق',
+      crumbs: ['علوم الحاسوب', 'المرحلة الثانية', 'هياكل البيانات', 'امتحانات سابقة'],
+      chips: ['الفصل الأول', 'PDF', 'امتحان سابق'],
+      fileList: [
+        { type: 'PDF', name: 'الامتحان النهائي 2025 مع الحلول', meta: '2.1 MB · ★ 4.8 · 312 تنزيل' },
+        { type: 'PDF', name: 'امتحان نصف الفصل 2025', meta: '1.4 MB · ★ 4.5 · 198 تنزيل' },
+        { type: 'DOCX', name: 'ملخص الأشجار والمخططات', meta: '860 KB · ★ 4.6 · 141 تنزيل' },
+        { type: 'PDF', name: 'ملاحظات المحاضرة 7 (رفعتها أنت)', meta: '3.2 MB', pending: true }
+      ],
+      pending: 'بانتظار المراجعة', upload: '+ رفع ملف',
+      collegeTitle: 'كليتك',
+      collegeList: [
+        ['الأقسام', '6 أقسام ورؤساؤها'],
+        ['التقويم الأكاديمي', 'الفصل الأول · الأسبوع 9'],
+        ['جداول الامتحانات', 'حُدّثت قبل يومين'],
+        ['خريطة الحرم', 'المباني من A إلى F'],
+        ['الإجراءات والأسئلة الشائعة', 'التسجيل، النقل، طلب الوثائق'],
+        ['أرقام الكادر', 'المكاتب وأرقام الهواتف']
+      ],
+      profTitle: 'حسابي', you: 'طالب تجريبي', email: 'you@college.edu', verified: '✓ بريد الكلية موثّق',
+      dept: 'علوم الحاسوب · المرحلة الثانية',
+      stats: [['3', 'ملفاتي'], ['12', 'المفضلة'], ['40', 'التنزيلات']],
+      notif: 'الإشعارات', notifs: [['القرارات العاجلة', true], ['أخبار الامتحانات', true], ['الفعاليات', false]]
+    }
+  };
+
+  var state = { lang: 'en', screen: 'home', slide: 0 };
+  var phone = document.getElementById('phone');
+  var screenEl = document.getElementById('phScreen');
+  var navEl = document.getElementById('phNav');
+  var langBtn = document.getElementById('langBtn');
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function tag(t, k) { return '<span class="tag ' + k + '">' + esc(t.tags[k]) + '</span>'; }
+
+  var screens = {
+    home: function (t) {
+      var slides = t.slides.map(function (s, i) {
+        return '<div class="slide' + (i === state.slide ? ' on' : '') + '"><div class="slide-top">' + tag(t, s.tag) +
+          (s.urgent ? '<span class="urgent">' + esc(t.urgent) + '</span>' : '') + '<span class="pin">' + esc(t.pinned) + '</span></div>' +
+          '<h5>' + esc(s.title) + '</h5><small>' + esc(s.office) + '</small></div>';
+      }).join('');
+      var dots = t.slides.map(function (_, i) { return '<i' + (i === state.slide ? ' class="on"' : '') + '></i>'; }).join('');
+      var feed = t.feed.map(function (f) {
+        return '<li class="item"><div class="item-row">' + tag(t, f.tag) + '<span class="item-meta">' + esc(f.when) + '</span></div><b>' + esc(f.title) + '</b>' +
+          '<span class="item-meta">' + esc(f.office) + (f.pdf ? ' · ' + esc(t.pdf) : '') + '</span></li>';
+      }).join('');
+      return '<div class="ph-head"><b>College Hub</b><span class="ph-sub">' + esc(t.hello) + '</span></div>' +
+        '<div class="banner" id="banner">' + slides + '<div class="dots">' + dots + '</div></div>' +
+        '<p class="ph-h">' + esc(t.latest) + '</p><ul class="list">' + feed + '</ul>';
+    },
+    files: function (t) {
+      var list = t.fileList.map(function (f) {
+        return '<li class="item"><div class="item-row"><b>' + esc(f.name) + '</b><span class="ftype' + (f.type === 'DOCX' ? ' docx' : '') + '">' + f.type + '</span></div>' +
+          '<div class="item-row"><span class="item-meta">' + esc(f.meta) + '</span>' + (f.pending ? '<span class="pending">' + esc(t.pending) + '</span>' : '') + '</div></li>';
+      }).join('');
+      return '<div class="ph-head"><b>' + esc(t.filesTitle) + '</b></div>' +
+        '<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>' + esc(t.search) + '</div>' +
+        '<div class="crumbs">' + t.crumbs.map(function (c) { return '<span>' + esc(c) + '</span>'; }).join('<span aria-hidden="true">›</span>') + '</div>' +
+        '<div class="chips">' + t.chips.map(function (c, i) { return '<span class="chip' + (i < 2 ? ' on' : '') + '">' + esc(c) + '</span>'; }).join('') + '</div>' +
+        '<ul class="list">' + list + '</ul><span class="fab">' + esc(t.upload) + '</span>';
+    },
+    college: function (t) {
+      return '<div class="ph-head"><b>' + esc(t.collegeTitle) + '</b></div><ul class="list">' +
+        t.collegeList.map(function (c) {
+          return '<li class="item"><div class="item-row"><b>' + esc(c[0]) + '</b><span class="chev" aria-hidden="true">›</span></div><span class="item-meta">' + esc(c[1]) + '</span></li>';
+        }).join('') + '</ul>';
+    },
+    profile: function (t) {
+      return '<div class="ph-head"><b>' + esc(t.profTitle) + '</b></div>' +
+        '<div class="prof"><span class="avatar">ST</span><div><b>' + esc(t.you) + '</b><div class="item-meta">' + esc(t.email) + '</div><div class="verified">' + esc(t.verified) + '</div></div></div>' +
+        '<div class="item"><span class="item-meta">' + esc(t.dept) + '</span></div>' +
+        '<div class="stats">' + t.stats.map(function (s) { return '<div><b>' + s[0] + '</b><span>' + esc(s[1]) + '</span></div>'; }).join('') + '</div>' +
+        '<p class="ph-h">' + esc(t.notif) + '</p><ul class="list">' +
+        t.notifs.map(function (n, i) {
+          return '<li class="item"><div class="item-row"><span>' + esc(n[0]) + '</span><button class="toggle" type="button" role="switch" id="notif-' + i + '" aria-label="' + esc(n[0]) + '" aria-checked="' + n[1] + '"></button></div></li>';
+        }).join('') + '</ul>';
+    }
+  };
+
+  function renderNav() {
+    var t = T[state.lang];
+    navEl.innerHTML = ['home', 'files', 'college', 'profile'].map(function (k) {
+      return '<button type="button" data-tab="' + k + '" aria-pressed="' + (state.screen === k) + '">' + icon(k) + '<span>' + esc(t.tabs[k]) + '</span></button>';
+    }).join('');
+  }
+  function render() {
+    var t = T[state.lang];
+    phone.setAttribute('lang', state.lang);
+    phone.setAttribute('dir', state.lang === 'ar' ? 'rtl' : 'ltr');
+    langBtn.textContent = t.switchTo;
+    screenEl.innerHTML = screens[state.screen](t);
+    screenEl.scrollTop = 0;
+    renderNav();
+  }
+
+  navEl.addEventListener('click', function (e) {
+    var b = e.target.closest('button[data-tab]');
+    if (!b) return;
+    state.screen = b.getAttribute('data-tab');
+    render();
+  });
+  langBtn.addEventListener('click', function () {
+    state.lang = state.lang === 'en' ? 'ar' : 'en';
+    render();
+  });
+  screenEl.addEventListener('click', function (e) {
+    var tg = e.target.closest('.toggle');
+    if (tg) tg.setAttribute('aria-checked', tg.getAttribute('aria-checked') === 'true' ? 'false' : 'true');
+  });
+  document.querySelectorAll('.peek').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.screen = b.getAttribute('data-go');
+      render();
+      phone.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+    });
+  });
+
+  // Rotate the pinned banner, like the app's announcement slot.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(function () {
+      state.slide = (state.slide + 1) % T.en.slides.length;
+      var banner = document.getElementById('banner');
+      if (!banner) return;
+      banner.querySelectorAll('.slide').forEach(function (s, i) { s.classList.toggle('on', i === state.slide); });
+      banner.querySelectorAll('.dots i').forEach(function (d, i) { d.classList.toggle('on', i === state.slide); });
+    }, 4000);
+  }
+
+  // Requirement priority filter.
+  var filterBtns = document.querySelectorAll('.filters button');
+  filterBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var p = b.getAttribute('data-p');
+      filterBtns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      document.querySelectorAll('#reqBody tr').forEach(function (r) { r.hidden = p !== 'all' && r.getAttribute('data-p') !== p; });
+    });
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
