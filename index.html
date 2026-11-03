@@ -4,376 +4,138 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>College Hub</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
   <style>
-    /* Colors from the College Hub design: navy ink, blue, highlighter yellow */
-    :root {
-      --bg: #f4f6fb;
-      --card: #ffffff;
-      --text: #131a31;
-      --muted: #59627e;
-      --line: #dce1ec;
-      --blue: #2d48d2;
-      --yellow: #ffd43b;
-      --navy: #131a31;
-
-      --red: #c3332f;    --red-bg: #fce9e8;
-      --indigo: #2d48d2; --indigo-bg: #e6eafc;
-      --green: #0b7c6b;  --green-bg: #e1f4f0;
-      --orange: #9a5b00; --orange-bg: #fbf0dc;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0c1121;
-        --card: #141b30;
-        --text: #e7ebf5;
-        --muted: #9ca5c2;
-        --line: #263049;
-        --blue: #8fa2ff;
-        --navy: #1d2747;
-        --red: #ff8a84;    --red-bg: #3a1d22;
-        --indigo: #a7b5ff; --indigo-bg: #1e2752;
-        --green: #5fd6c1;  --green-bg: #12322f;
-        --orange: #f2bc5e; --orange-bg: #3a2c12;
-      }
-    }
-
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Atkinson Hyperlegible", Arial, sans-serif;
+      font-family: Arial, sans-serif;
       line-height: 1.5;
-      background: var(--bg);
-      color: var(--text);
+      background: #fff;
+      color: #000;
     }
-    h1, h2, h3 { font-family: "Bricolage Grotesque", Arial, sans-serif; margin: 0; }
-    .container { max-width: 960px; margin: 0 auto; padding: 0 16px; }
-    .muted { color: var(--muted); }
-    .highlight { background: linear-gradient(transparent 58%, var(--yellow) 58%, var(--yellow) 92%, transparent 92%); }
-    @media (prefers-color-scheme: dark) { .highlight { background: linear-gradient(transparent 58%, rgba(255,212,59,.35) 58%, rgba(255,212,59,.35) 92%, transparent 92%); } }
 
-    /* Header */
-    header { position: sticky; top: 0; z-index: 5; background: var(--card); border-bottom: 1px solid var(--line); }
-    header .container { display: flex; align-items: center; justify-content: space-between; padding-block: 12px; }
-    .logo { display: flex; align-items: center; gap: 10px; font-family: "Bricolage Grotesque", Arial, sans-serif; font-weight: 800; font-size: 1.2rem; }
-    .logo-mark { background: var(--yellow); color: #131a31; border-radius: 8px; width: 32px; height: 32px; display: grid; place-items: center; font-size: .9rem; }
-    nav a { color: var(--muted); text-decoration: none; font-weight: 700; margin-left: 18px; }
-    nav a:hover { color: var(--blue); }
+    /* The only color on the page: the top bar */
+    header {
+      background: #2d48d2;
+      color: #fff;
+      border-bottom: 6px solid #ffd43b;
+      padding: 20px 16px;
+    }
+    header h1 { margin: 0; }
+    header p { margin: 4px 0 0; }
 
-    section { padding: 48px 0; }
+    main { max-width: 800px; margin: 0 auto; padding: 0 16px 40px; }
+    h2 { border-bottom: 2px solid #000; padding-bottom: 6px; margin-top: 36px; }
+    .gray { color: #555; }
 
-    /* Hero */
-    .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; max-width: 18ch; margin: 8px 0 16px; }
-    .eyebrow { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-top: 28px; }
-    .stat { border-top: 3px solid var(--blue); padding-top: 10px; }
-    .stat b { display: block; font-family: "Bricolage Grotesque", Arial, sans-serif; font-size: 1.7rem; }
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    .feature { border: 1px solid #000; padding: 14px; }
+    .feature h3 { margin: 0 0 6px; }
+    .feature p { margin: 0; }
 
-    /* News banner */
-    .banner { background: var(--navy); color: #fff; border-radius: 16px; padding: 20px 24px; margin-top: 32px; min-height: 120px; }
-    .banner h3 { font-size: 1.3rem; margin: 10px 0 4px; }
-    .banner small { opacity: .75; }
-    .dots { display: flex; gap: 6px; margin-top: 12px; }
-    .dots span { width: 8px; height: 8px; border-radius: 50%; background: #fff; opacity: .35; }
-    .dots span.on { background: var(--yellow); opacity: 1; }
-    .urgent { background: var(--yellow); color: #131a31; font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-left: 6px; }
+    form { display: flex; flex-wrap: wrap; gap: 8px; }
+    input, select, button { font: inherit; padding: 8px; border: 1px solid #000; background: #fff; color: #000; }
+    button { background: #000; color: #fff; cursor: pointer; }
+    #message { font-weight: bold; }
 
-    /* Tags */
-    .tag { display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 3px 9px; border-radius: 999px; }
-    .Decision, .Assignment { color: var(--red); background: var(--red-bg); }
-    .Exam, .Past-exam { color: var(--indigo); background: var(--indigo-bg); }
-    .News, .Lecture { color: var(--green); background: var(--green-bg); }
-    .Event, .Summary { color: var(--orange); background: var(--orange-bg); }
-    .banner .tag { background: #fff; }
-
-    /* Study files */
-    .panel { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
-    .filters, .upload { display: flex; flex-wrap: wrap; gap: 10px; }
-    input, select, button { font: inherit; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--text); }
-    .filters input { flex: 1; min-width: 200px; }
-    input:focus, select:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
-    button { background: var(--blue); color: #fff; border: 0; font-weight: 700; cursor: pointer; }
-    button:hover { filter: brightness(1.1); }
-    #count { margin: 14px 0 4px; font-size: .9rem; }
-    .file { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
-    .file:last-child { border-bottom: 0; }
+    .file { border-bottom: 1px solid #ccc; padding: 10px 0; }
     .file b { display: block; }
-    .file .info { font-size: .88rem; }
-    .file a { color: var(--blue); font-weight: 700; text-decoration: none; white-space: nowrap; }
-    .new { color: var(--green); font-weight: 700; font-size: .8rem; margin-left: 6px; }
-    .upload-title { margin: 28px 0 12px; }
-    #message { margin-top: 10px; font-weight: 700; }
-    #message.error { color: var(--red); }
-    #message.ok { color: var(--green); }
-
-    /* Cards */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-top: 20px; }
-    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
-    .card h3 { margin-bottom: 6px; }
-    .card.dark { background: var(--navy); color: #fff; border-color: var(--navy); }
-    .card.dark .muted { color: #c6cce0; }
-
-    footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--muted); font-size: .9rem; }
-    footer a { color: var(--blue); }
-
-    @media (max-width: 600px) { nav { display: none; } .file { flex-direction: column; align-items: flex-start; } }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="container">
-      <div class="logo"><span class="logo-mark">CH</span>College Hub</div>
-      <nav>
-        <a href="#files">Study files</a>
-        <a href="#features">Features</a>
-        <a href="#roadmap">Roadmap</a>
-      </nav>
-    </div>
+    <h1>College Hub</h1>
+    <p>Study files, college info and news in one place.</p>
   </header>
 
-  <!-- Hero + news banner -->
-  <section class="hero">
-    <div class="container">
-      <p class="eyebrow">Student-run · One college · Arabic &amp; English</p>
-      <h1>Study files, college info and decisions, all in <span class="highlight">one app</span>.</h1>
-      <p class="muted">No more files buried in WhatsApp groups or decisions missed on paper boards.</p>
+  <main>
 
-      <div class="banner" id="banner"></div>
-
-      <div class="stats">
-        <div class="stat"><b>&lt; 30 s</b><span class="muted">to find a study file</span></div>
-        <div class="stat"><b>Same day</b><span class="muted">for decisions to reach students</span></div>
-        <div class="stat"><b>25 MB</b><span class="muted">upload limit, checked by moderators</span></div>
-      </div>
+    <h2>Features</h2>
+    <div class="features">
+      <div class="feature"><h3>News board</h3><p class="gray">Official decisions and news, with alerts for urgent posts.</p></div>
+      <div class="feature"><h3>Study files</h3><p class="gray">Lectures, summaries and past exams, sorted by course.</p></div>
+      <div class="feature"><h3>College info</h3><p class="gray">Departments, staff contacts, calendar and campus map.</p></div>
+      <div class="feature"><h3>Profile</h3><p class="gray">Sign up with your college email and pick your department.</p></div>
     </div>
-  </section>
 
-  <!-- Study files -->
-  <section id="files">
-    <div class="container">
-      <h2>Study files</h2>
-      <p class="muted">Search by title or course, then narrow down with the filters.</p>
+    <h2>Upload a study file</h2>
+    <form id="uploadForm">
+      <input id="title" type="text" placeholder="File title" required>
+      <input id="course" type="text" placeholder="Course" required>
+      <select id="type">
+        <option>Lecture</option>
+        <option>Summary</option>
+        <option>Past exam</option>
+        <option>Assignment</option>
+      </select>
+      <input id="file" type="file" accept=".pdf,.docx,.pptx,.jpg,.png" required>
+      <button type="submit">Upload</button>
+    </form>
+    <p id="message"></p>
 
-      <div class="panel">
-        <div class="filters">
-          <input id="search" type="text" placeholder="Search files, e.g. data structures">
-          <select id="department">
-            <option value="">All departments</option>
-            <option>Computer Science</option>
-            <option>Engineering</option>
-            <option>Business</option>
-          </select>
-          <select id="stage">
-            <option value="">All stages</option>
-            <option value="1">Stage 1</option>
-            <option value="2">Stage 2</option>
-            <option value="3">Stage 3</option>
-            <option value="4">Stage 4</option>
-          </select>
-          <select id="type">
-            <option value="">All types</option>
-            <option>Lecture</option>
-            <option>Summary</option>
-            <option>Past exam</option>
-            <option>Assignment</option>
-          </select>
-        </div>
+    <h2>Uploaded files</h2>
+    <div id="fileList"><p class="gray">No files yet. Upload one above.</p></div>
 
-        <p id="count" class="muted"></p>
-        <div id="fileList"></div>
-
-        <h3 class="upload-title">Upload a file</h3>
-        <form id="uploadForm" class="upload">
-          <input id="upTitle" type="text" placeholder="File title" required>
-          <input id="upCourse" type="text" placeholder="Course" required>
-          <select id="upDepartment">
-            <option>Computer Science</option>
-            <option>Engineering</option>
-            <option>Business</option>
-          </select>
-          <select id="upStage">
-            <option value="1">Stage 1</option>
-            <option value="2">Stage 2</option>
-            <option value="3">Stage 3</option>
-            <option value="4">Stage 4</option>
-          </select>
-          <select id="upType">
-            <option>Lecture</option>
-            <option>Summary</option>
-            <option>Past exam</option>
-            <option>Assignment</option>
-          </select>
-          <input id="upFile" type="file" accept=".pdf,.docx,.pptx,.jpg,.png" required>
-          <button type="submit">Upload</button>
-        </form>
-        <p id="message"></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features -->
-  <section id="features">
-    <div class="container">
-      <h2>Four main areas</h2>
-      <div class="grid">
-        <div class="card"><span class="tag News">Home</span><h3 style="margin-top:10px">News board</h3><p class="muted">Pinned banner, a feed tagged by type, and alerts for urgent decisions.</p></div>
-        <div class="card"><span class="tag Exam">Files</span><h3 style="margin-top:10px">Study files</h3><p class="muted">Department › Stage › Course › Type, with search and moderated uploads.</p></div>
-        <div class="card"><span class="tag Event">College</span><h3 style="margin-top:10px">College info</h3><p class="muted">Departments, staff contacts, calendar, exam schedules and campus map.</p></div>
-        <div class="card"><span class="tag Decision">Profile</span><h3 style="margin-top:10px">Your account</h3><p class="muted">College email sign-up, your department and stage, and notifications.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Roadmap -->
-  <section id="roadmap">
-    <div class="container">
-      <h2>Release plan</h2>
-      <div class="grid">
-        <div class="card dark"><p class="eyebrow" style="color:var(--yellow)">Phase 1 · MVP</p><h3>Launch the core</h3><p class="muted">Sign-up, news board, search and uploads. Pilot with 1 department.</p></div>
-        <div class="card"><p class="eyebrow">Phase 2 · Growth</p><h3>Every department</h3><p class="muted">Moderator tools, college pages, ratings and personalization.</p></div>
-        <div class="card"><p class="eyebrow">Phase 3 · Expansion</p><h3>Beyond one college</h3><p class="muted">Offline files, comments and support for multiple colleges.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      College Hub · a student-run practice project by Ali ·
-      <a href="https://github.com/Ali-hatham/C.HUB">GitHub</a>
-    </div>
-  </footer>
+  </main>
 
   <script>
-    // ---------- Rotating news banner ----------
-    const news = [
-      { tag: "Decision", title: "Final exams start on 4 January", office: "Dean's Office", urgent: true },
-      { tag: "Exam", title: "Second-semester exam schedule published", office: "Exams Committee" },
-      { tag: "News", title: "Library stays open until 9 pm during exams", office: "Library" }
-    ];
-    let slide = 0;
-
-    function showBanner() {
-      const n = news[slide];
-      const dots = news.map(function (_, i) { return '<span class="' + (i === slide ? "on" : "") + '"></span>'; }).join("");
-      document.getElementById("banner").innerHTML =
-        '<span class="tag ' + n.tag + '">' + n.tag + '</span>' +
-        (n.urgent ? '<span class="urgent">Urgent</span>' : "") +
-        "<h3>" + n.title + "</h3><small>" + n.office + " · Pinned</small>" +
-        '<div class="dots">' + dots + "</div>";
-      slide = (slide + 1) % news.length;
-    }
-    showBanner();
-    setInterval(showBanner, 4000);
-
-    // ---------- Study files ----------
-    // Sample files. Uploaded files are added to this list.
-    let files = [
-      { title: "Final exam 2025 with answers", course: "Data Structures", department: "Computer Science", stage: "2", type: "Past exam", size: "2.1 MB" },
-      { title: "Lecture 3: Linked lists", course: "Data Structures", department: "Computer Science", stage: "2", type: "Lecture", size: "1.4 MB" },
-      { title: "Calculus summary", course: "Calculus I", department: "Engineering", stage: "1", type: "Summary", size: "900 KB" },
-      { title: "Accounting homework 2", course: "Accounting", department: "Business", stage: "1", type: "Assignment", size: "300 KB" }
-    ];
-
     const MAX_SIZE = 25 * 1024 * 1024; // 25 MB
+    const files = [];
 
-    // Show the files that match the search and filters.
-    function showFiles() {
-      const search = document.getElementById("search").value.toLowerCase();
-      const department = document.getElementById("department").value;
-      const stage = document.getElementById("stage").value;
-      const type = document.getElementById("type").value;
-
-      const results = files.filter(function (f) {
-        const text = (f.title + " " + f.course).toLowerCase();
-        return text.includes(search)
-          && (department === "" || f.department === department)
-          && (stage === "" || f.stage === stage)
-          && (type === "" || f.type === type);
-      });
-
-      document.getElementById("count").textContent = results.length + " file(s) found";
-
-      const list = document.getElementById("fileList");
-      list.innerHTML = "";
-      results.forEach(function (f) {
-        const row = document.createElement("div");
-        row.className = "file";
-
-        const left = document.createElement("div");
-        const title = document.createElement("b");
-        title.textContent = f.title;
-        if (f.url) {
-          const badge = document.createElement("span");
-          badge.className = "new";
-          badge.textContent = "New";
-          title.appendChild(badge);
-        }
-        const info = document.createElement("span");
-        info.className = "info muted";
-        info.textContent = f.course + " · " + f.department + " · Stage " + f.stage + " · " + f.size;
-        left.appendChild(title);
-        left.appendChild(info);
-
-        const right = document.createElement("div");
-        const tag = document.createElement("span");
-        tag.className = "tag " + f.type.replace(" ", "-");
-        tag.textContent = f.type;
-        right.appendChild(tag);
-
-        // Only uploaded files have a real file to open.
-        if (f.url) {
-          const link = document.createElement("a");
-          link.href = f.url;
-          link.download = f.fileName;
-          link.textContent = " Download";
-          right.appendChild(link);
-        }
-
-        row.appendChild(left);
-        row.appendChild(right);
-        list.appendChild(row);
-      });
-    }
-
-    // Add an uploaded file to the list.
+    // Upload a file and add it to the list.
     function uploadFile(event) {
       event.preventDefault();
-      const file = document.getElementById("upFile").files[0];
+      const file = document.getElementById("file").files[0];
       const message = document.getElementById("message");
 
       if (file.size > MAX_SIZE) {
-        message.className = "error";
         message.textContent = "That file is over 25 MB. Choose a smaller file.";
         return;
       }
 
       files.unshift({
-        title: document.getElementById("upTitle").value,
-        course: document.getElementById("upCourse").value,
-        department: document.getElementById("upDepartment").value,
-        stage: document.getElementById("upStage").value,
-        type: document.getElementById("upType").value,
-        size: file.size < 1024 * 1024
-          ? Math.max(1, Math.round(file.size / 1024)) + " KB"
-          : (file.size / 1024 / 1024).toFixed(1) + " MB",
-        fileName: file.name,
+        title: document.getElementById("title").value,
+        course: document.getElementById("course").value,
+        type: document.getElementById("type").value,
+        name: file.name,
+        size: Math.max(1, Math.round(file.size / 1024)) + " KB",
         url: URL.createObjectURL(file)
       });
 
-      message.className = "ok";
       message.textContent = "Uploaded \"" + file.name + "\".";
       document.getElementById("uploadForm").reset();
       showFiles();
     }
 
-    document.getElementById("search").addEventListener("input", showFiles);
-    document.getElementById("department").addEventListener("change", showFiles);
-    document.getElementById("stage").addEventListener("change", showFiles);
-    document.getElementById("type").addEventListener("change", showFiles);
-    document.getElementById("uploadForm").addEventListener("submit", uploadFile);
+    // Show all uploaded files with a download link.
+    function showFiles() {
+      const list = document.getElementById("fileList");
+      list.innerHTML = "";
 
-    showFiles();
+      files.forEach(function (f) {
+        const row = document.createElement("div");
+        row.className = "file";
+
+        const title = document.createElement("b");
+        title.textContent = f.title;
+
+        const info = document.createElement("span");
+        info.className = "gray";
+        info.textContent = f.course + " · " + f.type + " · " + f.size + " · ";
+
+        const link = document.createElement("a");
+        link.href = f.url;
+        link.download = f.name;
+        link.textContent = "Download";
+
+        row.appendChild(title);
+        row.appendChild(info);
+        row.appendChild(link);
+        list.appendChild(row);
+      });
+    }
+
+    document.getElementById("uploadForm").addEventListener("submit", uploadFile);
   </script>
 
 </body>
